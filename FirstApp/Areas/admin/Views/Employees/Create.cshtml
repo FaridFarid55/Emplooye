@@ -1,0 +1,113 @@
+﻿@* @model CustomersModel
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">SingIn</h4>
+                <form method="post" enctype="multipart/form-data"
+                      asp-controller="Employees" asp-action="Save"
+                      id="example-form">
+                    <div role="application" class="wizard clearfix" id="steps-uid-0">
+                        <div class="steps clearfix"><ul role="tablist"><li role="tab" class="first current" aria-disabled="false" aria-selected="true"><a id="steps-uid-0-t-0" href="#steps-uid-0-h-0" aria-controls="steps-uid-0-p-0"><span class="current-info audible">current step: </span><span class="number">1.</span> Account</a></li><li role="tab" class="disabled" aria-disabled="true"><a id="steps-uid-0-t-1" href="#steps-uid-0-h-1" aria-controls="steps-uid-0-p-1"><span class="number">2.</span> Profile</a></li><li role="tab" class="disabled" aria-disabled="true"><a id="steps-uid-0-t-2" href="#steps-uid-0-h-2" aria-controls="steps-uid-0-p-2"><span class="number">3.</span> Comments</a></li><li role="tab" class="disabled last" aria-disabled="true"><a id="steps-uid-0-t-3" href="#steps-uid-0-h-3" aria-controls="steps-uid-0-p-3"><span class="number">4.</span> Finish</a></li></ul></div><div class="content clearfix">
+                            <h3 id="steps-uid-0-h-0" tabindex="-1" class="title current">Account</h3>
+                            <section id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body current" aria-hidden="false">
+                                <h3>Account</h3>
+                                <div class="form-group">
+                                    <label>Email address</label>
+                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
+                                           asp-for="Email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" placeholder="Password.."
+                                           asp-for="Password">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" class="form-control" placeholder="Confirm password.."
+                                           asp-for="ConfirmPassword">
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </section>
+                            <h3 id="steps-uid-0-h-1" tabindex="-1" class="title">Profile</h3>
+                            <section id="steps-uid-0-p-1" role="tabpanel" aria-labelledby="steps-uid-0-h-1" class="body" aria-hidden="true" style="display: none;">
+                                <h3>Profile</h3>
+                                <div class="form-group">
+                                    <label>UserName</label>
+                                    <input type="text" class="form-control" placeholder="User Name.."
+                                           asp-for="CustomerName">
+                                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="number" class="form-control" placeholder="Phone.."
+                                           asp-for="Phone">
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </section>
+                            <h3 id="steps-uid-0-h-2" tabindex="-1" class="title">Comments</h3>
+                            <section id="steps-uid-0-p-2" role="tabpanel" aria-labelledby="steps-uid-0-h-2" class="body" aria-hidden="true" style="display: none;">
+                                <h3>About me</h3>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" class="form-control" placeholder="City.."
+                                           asp-for="City">
+                                    <span asp-validation-for="City" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control" placeholder="Company.."
+                                           asp-for="Company">
+                                    <span asp-validation-for="Company" class="text-danger"></span>
+                                </div>
+                            </section>
+                            <h3 id="steps-uid-0-h-3" tabindex="-1" class="title">Finish</h3>
+                            <section id="steps-uid-0-p-3" role="tabpanel" aria-labelledby="steps-uid-0-h-3" class="body" aria-hidden="true" style="display: none;">
+                                <h3>Finish</h3>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="checkbox" type="checkbox"
+                                               asp-for="Conditions">
+                                        <span asp-validation-for="Conditions" class="text-danger"></span>
+                                        I agree with the Terms and Conditions. <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="actions clearfix">
+                            <ul role="menu" aria-label="Pagination">
+                                <li class="" aria-disabled="false"><a href="#previous" role="menuitem">Previous</a></li>
+                                <li aria-hidden="false" aria-disabled="false"><a href="#next" role="menuitem">Next</a></li>
+                                <li aria-hidden="true" style="display: none;">
+                                    <button type="submit">Finish</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/wizard.js"></script>
+    <!-- End custom js for this page -->
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/jquery-steps/jquery.steps.min.js"></script>
+    <!-- End plugin js for this page -->
+} *@
+
+@section Scripts
+{
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/jquery-steps/jquery.steps.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/wizard.js"></script>
+    <!-- End custom js for this page -->
+}

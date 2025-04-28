@@ -1,0 +1,41 @@
+﻿@model LinkedList<EmployeesModel>
+
+<div class="card-body">
+    <h4 class="card-title">Striped Table</h4>
+    <div class="card-description">
+        <a href="/Admin/Employees/Edit" class="btn btn-gradient-primary btn-fw">New</a>
+    </div>
+    <table class="table table-striped" id="order-listing">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Titel</th>
+                <th>Description</th>
+                <th> Email</th>
+            </tr>
+        </thead>
+        <tobody>
+            @foreach (var employees in Model)
+            {
+                <tr>
+                    <td> @employees.Id</td>
+                    <td>@employees.Name</td>
+                    <td>@employees.Titel</td>
+                    <td>@employees.Description</td>
+                    <td>@employees.Email</td>
+                </tr>
+            }
+        </tobody>
+    </table>
+</div>
+@section Scripts
+{
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/data-table.js"></script>
+    <!-- End custom js for this page -->
+}

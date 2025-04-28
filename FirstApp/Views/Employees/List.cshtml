@@ -1,0 +1,88 @@
+﻿@model LinkedList<EmployeesModel>
+
+
+
+
+<h1>Employees Data</h1>
+<div>
+    <a href="/CustomView/CustomView">click</a>
+</div>
+
+
+
+<h2>
+    @string.Format("{0}  :  {1}", "Departemnt Name", ViewBag.Departemnt);
+    @ViewData["Salary"];
+</h2>
+
+<div class="row">
+
+    @foreach (var Employees in Model)
+    {
+        <div class="column">
+            <div class="card">
+                <img src="~/Images/@Employees.imgName" alt="John" style="width:100%; height:400px;`">
+                <div class="container">
+                    <h2>@Employees.Name</h2>
+                    <p class="title">@Employees.Titel</p>
+                    @if (Employees.Titel == "Developer")
+                    {
+                        <div>
+                            <button>
+                                <a asp-controller="Home" asp-action="Index" asp-route-Id="@Employees.imgName">
+                                    go to Developer
+                                </a>
+
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>@Employees.Description</p>
+                    }
+                    <p>@Employees.Email</p>
+
+                    @{
+                        var prms = new Dictionary<string, string>
+                {
+                {"Id",@Employees.Id.ToString()},
+                {"Name",Employees.Name}
+                };
+                    }
+
+                    <p><a asp-controller="Employees" asp-action="Details" asp-route-Id="@Employees.Id" class="button">Contact</a></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@* <div class="row" ">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Titel</th>
+                <th>Description</th>
+                <th> Email</th>
+            </tr>
+        </thead>
+
+        <tobody>
+@foreach (var employees in ViewBag.EmployeesTable)
+{
+                <tr>
+
+                    <td> @employees.Id</td>
+                    <td>@employees.Name</td>
+                    <td>@employees.Titel</td>
+                    <td>@employees.Description</td>
+                    <td>@employees.Email</td>
+                </tr>
+}
+        </tobody>
+    </table>
+</div> *@
+

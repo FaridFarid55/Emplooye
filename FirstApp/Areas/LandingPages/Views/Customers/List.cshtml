@@ -1,0 +1,108 @@
+﻿@model List<CustomersModel>
+
+@section style
+{
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/Admin/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <a href="b:\fr_farid\c#\web\project\firstapp\firstapp\areas\landingpages\views\customers\customerlist.cshtml">b:\fr_farid\c#\web\project\firstapp\firstapp\areas\landingpages\views\customers\list.cshtml</a>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-description">
+                        <a href="/LandingPages/Customers/AddCustomer" class="btn btn-gradient-primary btn-fw">Add Customer:</a>
+                    </div>
+                    <h5>Show Customer</h5>
+                </div>
+                <div class="card-body order-datatable">
+                    <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
+
+                        <div class="dataTables_length" id="basic-1_length">
+                            <label>
+                                Show
+                                <select name="basic-1_length" aria-controls="basic-1" class="">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select> entries
+                            </label>
+                        </div>
+                        <div id="basic-1_filter" class="dataTables_filter">
+                            <label>Search:</label>
+                            <input type="search" class="" placeholder="" aria-controls="basic-1"></label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label>Single select box using select 2</label>
+                            <select asp-items="@(new SelectList(ViewBag.Customer, "CustomerId", "CustomerName"))"
+                                    class="js-example-basic-single select2-hidden-accessible"
+                                    style="width:100%" data-select2-id="2"
+                                    tabindex="-1" aria-hidden="true">
+                            </select>
+                        </div>
+                        <table class="display dataTable no-footer" id="basic-1"
+                               role="grid" aria-describedby="basic-1_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Order Id: activate to sort column descending" style="width: 121px;">Customer Id</th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Payment Status: activate to sort column ascending" style="width: 139.469px;">Customer Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Payment Method: activate to sort column ascending" style="width: 121px;">Phone</th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 121px;">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1" colspan="1" aria-label="Total: activate to sort column ascending" style="width: 121px;">Cy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var customer in Model)
+                                {
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">@customer.CustomerId</td>
+                                        <td class="sorting_1">@customer.CustomerName</td>
+                                        <td class="sorting_1">@customer.Phone</td>
+                                        <td class="sorting_1">@customer.Email</td>
+                                        <td class="sorting_1">@customer.City</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="dataTables_info" id="basic-1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                        <div class="dataTables_paginate paging_simple_numbers" id="basic-1_paginate">
+                            <a class="paginate_button previous disabled" aria-controls="basic-1" data-dt-idx="0" tabindex="0" id="basic-1_previous">Previous</a>
+                            <span>
+                                <a class="paginate_button current" aria-controls="basic-1" data-dt-idx="1" tabindex="0">1</a>
+                                <a class="paginate_button " aria-controls="basic-1" data-dt-idx="2" tabindex="0">2</a>
+                                <a class="paginate_button " aria-controls="basic-1" data-dt-idx="3" tabindex="0">3</a><a class="paginate_button " aria-controls="basic-1" data-dt-idx="4" tabindex="0">4</a>
+                                <a class="paginate_button " aria-controls="basic-1" data-dt-idx="5" tabindex="0">5</a>
+                                <a class="paginate_button " aria-controls="basic-1" data-dt-idx="6" tabindex="0">6</a>
+                            </span>
+                            <a class="paginate_button next" aria-controls="basic-1" data-dt-idx="7" tabindex="0" id="basic-1_next">Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pages
+{
+    <!-- Datatable js-->
+    <script src="~/LandingPages/js/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/LandingPages/js/datatables/custom-basic.js"></script>
+
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/select2/select2.min.js"></script>
+    <script src="~/Admin/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/file-upload.js"></script>
+    <script src="~/Admin/js/typeahead.js"></script>
+    <script src="~/Admin/js/select2.js"></script>
+    <!-- End custom js for this page -->
+}

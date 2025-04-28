@@ -1,0 +1,164 @@
+﻿@model InvoiceModel
+
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title"> Employees </h2>
+            <p class="card-description"> Add new or Edit </p>
+            <form class="forms-sample"
+                  method="post" enctype="multipart/form-data"
+                  asp-controller="Invoice" asp-action="Save">
+                <div class="form-group">
+                    <label>Invoice Number</label>
+                    <input class="form-control" ame="defaultconfig" id="defaultconfig"
+                           asp-for="InvoiceNumber" type="number" placeholder="Invoice Number..">
+                    <span asp-validation-for="InvoiceNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail3">Invoice Date</label>
+                    <input type="date" class="form-control" placeholder="Invoice Date.."
+                           asp-for="InvoiceDate" maxlength="50">
+                    <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" data-select2-id="7">
+                    <label style="direction: ltr; text-align: start;">Customer</label>
+                    <select asp-for="CustomerId"
+                            asp-items="@(new SelectList(ViewBag.Customers,"CustomerId","CustomerName"))"
+                            class="js-example-basic-single select2-hidden-accessible"
+                            style="width:100%" data-select2-id="1"
+                            tabindex="-1" aria-hidden="true">
+                    </select>
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+
+                <div class="form-check form-check-flat form-check-primary">
+                    <label class="form-check-label">HasShipping </label>
+                    <input type="checkbox"
+                           asp-for="HasShipping" />
+                    <span asp-validation-for="HasShipping" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleTextarea1">Description</label>
+                    <textarea class="form-control" rows="4"
+                              asp-for="Description" maxlength="4000">   </textarea>
+                </div>
+
+                <div>
+                    <table class="table table-hover" id="DataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < Model.InvoiceItems.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input asp-for="@Model.InvoiceItems[i].Price" class="formInput-@i" />
+                                        <span asp-validation-for="@Model.InvoiceItems[i].Price"></span>
+                                    </td>
+                                    <td>
+                                        <input asp-for="@Model.InvoiceItems[i].Quantity" class="formInput-@i" />
+                                        <span asp-validation-for="@Model.InvoiceItems[i].Quantity"></span>
+                                    </td>
+                                    <td>
+                                        <input type="button" class="btn btn-danger" value="Delete"
+                                               onclick="Delete(this)" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <input type="button" value="Add New Item" class="btn btn-info"
+                           onclick="AddRow()" />
+                </div>
+                <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                <button class="btn btn-dark">Cancel</button>
+                <input type="hidden" id="LastIndex" value="0" />
+            </form>
+            <div class="wrapper text-center">
+                <h4 class="card-title">Alerts Popups</h4>
+                <p class="card-description">A basic message</p>
+                <button class="btn btn-outline-primary" onclick="showSwal('basic')">Click here!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Admin//vendors/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/form-validation.js"></script>
+    <script src="~/Admin/js/bt-maxLength.js"></script>
+    <!-- End custom js for this page -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="~/Admin/vendors/jquery.avgrund/jquery.avgrund.min.js"></script>
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/alerts.js"></script>
+    <script src="~/Admin/js/avgrund.js"></script>
+    <!-- End custom js for this page -->
+
+    <script>
+        $(document).ready(function () {
+            SetLastIndex();
+        });
+
+        function SetLastIndex() {
+            let table = document.getElementById("DataTable");
+            let rows = table.getElementsByTagName("tr");
+            document.getElementById("LastIndex").value = parseInt(rows.length) - 2;
+        }
+
+        function Delete(btn) {
+            $(btn).closest("tr").remove();
+            SetLastIndex();
+        }
+
+        function AddRow() {
+            let table = document.getElementById("DataTable");
+            let rows = table.getElementsByTagName("tr");
+            let rowHtml = rows[rows.length - 1].outerHTML;
+
+            let lastIndexElement = document.getElementById("LastIndex");
+            let lastIndex = parseInt(lastIndexElement.value);
+            let newIndex = lastIndex + 1;
+
+            lastIndexElement.value = newIndex;
+            rowHtml = rowHtml.replaceAll('_' + lastIndex + '__', '_' + newIndex + '__');
+            rowHtml = rowHtml.replaceAll('[' + lastIndex + ']', '[' + newIndex + ']');
+            rowHtml = rowHtml.replaceAll('-' + lastIndex, '-' + newIndex);
+
+            let newRow = table.insertRow();
+            newRow.outerHTML = rowHtml;
+
+            let inputs = document.getElementsByClassName("formInput-" + newIndex);
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].value = "";
+            }
+
+
+        }
+    </script>
+}

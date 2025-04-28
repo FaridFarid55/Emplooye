@@ -42,7 +42,6 @@ namespace FirstApp.Bl
 
         public EmployeesModel Find(int Id)
         {
-            Console.WriteLine();
             return new EmployeesModel();
         }
     }

@@ -31,7 +31,7 @@ namespace FirstApp.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=FARID;database=HrApp;Trusted_Connection=True; TrustServerCertificate=Yes");
+                optionsBuilder.UseSqlServer("Server=FARIDFARID\\FARID_SERVER;database=HrApp;Trusted_Connection=True; TrustServerCertificate=Yes");
             }
         }
 

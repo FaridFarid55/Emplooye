@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FirstApp.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20240419155140_PersonTabaleMigration")]
-    partial class PersonTabaleMigration
+    [Migration("20250430085142_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,96 @@ namespace FirstApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CustomersModel", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("Conditions")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ConfirmPassword")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("TbCustomers");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.AllowancesModel", b =>
+                {
+                    b.Property<int>("AllowancesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AllowancesId"));
+
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllowancesId");
+
+                    b.ToTable("TbAllowancesModel");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.CustomersInvoicesModel", b =>
+                {
+                    b.Property<int>("CustomersInvoicesModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomersInvoicesModelId"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomersInvoicesModelId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("TbCustomersInvoicesBr");
+                });
 
             modelBuilder.Entity("FirstApp.Models.DepartmentsModel", b =>
                 {
@@ -73,6 +163,29 @@ namespace FirstApp.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("TbEmployeeVacation");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.EmployeesAllowancesModel", b =>
+                {
+                    b.Property<int>("EmployeesAllowancesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeesAllowancesId"));
+
+                    b.Property<int>("AllowancesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmployeesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeesAllowancesId");
+
+                    b.HasIndex("AllowancesId");
+
+                    b.HasIndex("EmployeesId");
+
+                    b.ToTable("TbEmployeesAllowances");
                 });
 
             modelBuilder.Entity("FirstApp.Models.EmployeesModel", b =>
@@ -181,7 +294,7 @@ namespace FirstApp.Migrations
 
                     b.HasKey("InvoiceId");
 
-                    b.ToTable("TbInvoiceModel");
+                    b.ToTable("TbInvoice");
                 });
 
             modelBuilder.Entity("FirstApp.Models.PersonModel", b =>
@@ -209,7 +322,26 @@ namespace FirstApp.Migrations
 
                     b.HasKey("PersonId");
 
-                    b.ToTable("TbPersonModel");
+                    b.ToTable("TbPerson");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.CustomersInvoicesModel", b =>
+                {
+                    b.HasOne("CustomersModel", "TbCustomer")
+                        .WithMany("CustomersInvoices")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FirstApp.Models.InvoiceModel", "TbInvoice")
+                        .WithMany("CustomersInvoices")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TbCustomer");
+
+                    b.Navigation("TbInvoice");
                 });
 
             modelBuilder.Entity("FirstApp.Models.EmployeeVacationModel", b =>
@@ -221,6 +353,25 @@ namespace FirstApp.Migrations
                         .IsRequired();
 
                     b.Navigation("TbEmployee");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.EmployeesAllowancesModel", b =>
+                {
+                    b.HasOne("FirstApp.Models.AllowancesModel", "TbAllowances")
+                        .WithMany("EmployeesAllowances")
+                        .HasForeignKey("AllowancesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FirstApp.Models.EmployeesModel", "TbEmployees")
+                        .WithMany("EmployeesAllowances")
+                        .HasForeignKey("EmployeesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TbAllowances");
+
+                    b.Navigation("TbEmployees");
                 });
 
             modelBuilder.Entity("FirstApp.Models.EmployeesModel", b =>
@@ -257,6 +408,16 @@ namespace FirstApp.Migrations
                     b.Navigation("TbInvoiceDetails");
                 });
 
+            modelBuilder.Entity("CustomersModel", b =>
+                {
+                    b.Navigation("CustomersInvoices");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.AllowancesModel", b =>
+                {
+                    b.Navigation("EmployeesAllowances");
+                });
+
             modelBuilder.Entity("FirstApp.Models.DepartmentsModel", b =>
                 {
                     b.Navigation("Employees");
@@ -265,10 +426,14 @@ namespace FirstApp.Migrations
             modelBuilder.Entity("FirstApp.Models.EmployeesModel", b =>
                 {
                     b.Navigation("EmployeeVacation");
+
+                    b.Navigation("EmployeesAllowances");
                 });
 
             modelBuilder.Entity("FirstApp.Models.InvoiceModel", b =>
                 {
+                    b.Navigation("CustomersInvoices");
+
                     b.Navigation("InvoiceDetails");
 
                     b.Navigation("InvoiceItems");
